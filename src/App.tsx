@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Apple, Monitor, Terminal, FileText, Check, ArrowDownToLine, Loader2, ChevronDown } from 'lucide-react';
+import './index.css';
 
 interface ReleaseAsset {
   id: number;
