@@ -167,16 +167,18 @@ export default function App() {
               <li><Check size={18} /> Automatic OTA background updates</li>
             </ul>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
-              <a href={(macArmAsset || macIntelAsset) ? (macArmAsset || macIntelAsset).browser_download_url : fallbackLink} className="btn-download btn-mac">
+              <a href={macArmAsset ? macArmAsset.browser_download_url : fallbackLink} className="btn-download btn-mac">
                 <ArrowDownToLine size={20} />
-                {macArmAsset ? `Download for macOS (Apple Silicon ARM64 - ${formatBytes(macArmAsset.size)})` : macIntelAsset ? `Download for macOS (Intel x64 - ${formatBytes(macIntelAsset.size)})` : 'Download for macOS (Universal)'}
+                {macArmAsset ? `Apple Silicon ARM64 (${formatBytes(macArmAsset.size)})` : 'Apple Silicon ARM64'}
               </a>
-              {macIntelAsset && macArmAsset && (
-                <a href={macIntelAsset.browser_download_url} className="btn-download btn-mac" style={{ opacity: 0.9, backgroundColor: '#4f46e5' }}>
-                  <ArrowDownToLine size={20} />
-                  Download for macOS (Intel x64 - {formatBytes(macIntelAsset.size)})
-                </a>
-              )}
+              <a href={macIntelAsset ? macIntelAsset.browser_download_url : fallbackLink} className="btn-download btn-mac" style={{ backgroundColor: '#4f46e5' }}>
+                <ArrowDownToLine size={20} />
+                {macIntelAsset ? `Intel x64 (${formatBytes(macIntelAsset.size)})` : 'Intel x64'}
+              </a>
+              <a href={(macArmAsset || macIntelAsset) ? (macArmAsset || macIntelAsset).browser_download_url : fallbackLink} className="btn-download btn-mac" style={{ backgroundColor: '#312e81' }}>
+                <ArrowDownToLine size={20} />
+                Universal Bundle
+              </a>
             </div>
           </div>
 
@@ -198,7 +200,7 @@ export default function App() {
             </ul>
             <a href={winAsset ? winAsset.browser_download_url : fallbackLink} className="btn-download btn-win" style={{ marginTop: 'auto' }}>
               <ArrowDownToLine size={20} />
-              {winAsset ? `Download for Windows (${formatBytes(winAsset.size)})` : 'Download for Windows (x64)'}
+              {winAsset ? `Download for Windows (${formatBytes(winAsset.size)})` : 'Download for Windows'}
             </a>
           </div>
 
@@ -209,8 +211,8 @@ export default function App() {
                 <Terminal size={24} />
               </div>
               <div className="os-info">
-                <h3>Linux</h3>
-                <p>Ubuntu, Debian, and Mint</p>
+                <h3>Ubuntu Linux</h3>
+                <p>Ubuntu, Debian, and Linux Mint</p>
               </div>
             </div>
             <ul className="features-list">
@@ -221,7 +223,11 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
               <a href={linuxDebAsset ? linuxDebAsset.browser_download_url : fallbackLink} className="btn-download" style={{ backgroundColor: '#e11d48', color: '#fff' }}>
                 <ArrowDownToLine size={20} />
-                {linuxDebAsset ? `Download DEB (${formatBytes(linuxDebAsset.size)})` : 'Download DEB Package'}
+                {linuxDebAsset ? `Download DEB Package (${formatBytes(linuxDebAsset.size)})` : 'Download DEB Package'}
+              </a>
+              <a href={fallbackLink} className="btn-download" style={{ backgroundColor: '#2563eb', color: '#fff' }}>
+                <ArrowDownToLine size={20} />
+                Download AppImage
               </a>
             </div>
           </div>
