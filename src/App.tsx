@@ -22,7 +22,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
 
   const repoOwner = "geeksmanin";
-  const repoName = "{{.appName}}-release";
+  const repoName = "portlabel-release";
 
   useEffect(() => {
     async function fetchReleases() {
@@ -69,20 +69,16 @@ export default function App() {
     return <div dangerouslySetInnerHTML={{ __html: formatted }} />;
   };
 
-  let macUniversalAsset: any = null;
   let macArmAsset: any = null;
   let macIntelAsset: any = null;
   let winAsset: any = null;
   let linuxDebAsset: any = null;
-  let linuxAppImageAsset: any = null;
 
   if (release?.assets) {
     release.assets.forEach(asset => {
       const name = asset.name.toLowerCase();
       if (name.includes('darwin') || name.includes('mac')) {
-        if (name.includes('universal')) {
-          macUniversalAsset = asset;
-        } else if (name.includes('arm64')) {
+        if (name.includes('arm64')) {
           macArmAsset = asset;
         } else if (name.includes('amd64')) {
           macIntelAsset = asset;
@@ -91,11 +87,8 @@ export default function App() {
       if (name.includes('win') || name.includes('windows')) {
         winAsset = asset;
       }
-      if (name.endsWith('.deb')) {
+      if (name.endsWith('.deb') || name.includes('linux')) {
         linuxDebAsset = asset;
-      }
-      if (name.endsWith('.appimage')) {
-        linuxAppImageAsset = asset;
       }
     });
   }
@@ -114,7 +107,7 @@ export default function App() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9m0 0a9.015 9.015 0 010 18M12 3a9.004 9.004 0 00-8.716 6.747M12 3a9.004 9.004 0 018.716 6.747M3.284 9.753a9.002 9.002 0 0117.432 0M3.284 9.753L21 9.753M3.284 14.247a9.003 9.003 0 0117.432 0M3.284 14.247L21 14.247" />
             </svg>
           </div>
-          <h1>{{.capitalizedName}}</h1>
+          <h1>PortLabel</h1>
           <p className="subtitle">Experience a new era of enterprise workflow. Clean, blazingly fast, and fully integrated desktop application for your organization.</p>
           
           <div className="header-controls">
