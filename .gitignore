@@ -1,0 +1,12 @@
+# Databases & pubsub files
+data/
+
+# Binaries
+*_bin
+demo_test_bin
+sample_test_bin
+dist/
+build/
+
+# Go files
+vendor/
