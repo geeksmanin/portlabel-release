@@ -166,15 +166,17 @@ export default function App() {
               <li><Check size={18} /> Universal & standalone options</li>
               <li><Check size={18} /> Automatic OTA background updates</li>
             </ul>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <a href={macArmAsset ? macArmAsset.browser_download_url : fallbackLink} className="btn-download btn-mac">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
+              <a href={(macArmAsset || macIntelAsset) ? (macArmAsset || macIntelAsset).browser_download_url : fallbackLink} className="btn-download btn-mac">
                 <ArrowDownToLine size={20} />
-                {macArmAsset ? `Apple Silicon ARM64 (${formatBytes(macArmAsset.size)})` : 'Apple Silicon Build'}
+                {macArmAsset ? `Download for macOS (Apple Silicon ARM64 - ${formatBytes(macArmAsset.size)})` : macIntelAsset ? `Download for macOS (Intel x64 - ${formatBytes(macIntelAsset.size)})` : 'Download for macOS (Universal)'}
               </a>
-              <a href={macIntelAsset ? macIntelAsset.browser_download_url : fallbackLink} className="btn-download btn-mac" style={{ opacity: 0.9, backgroundColor: '#4f46e5' }}>
-                <ArrowDownToLine size={20} />
-                {macIntelAsset ? `Intel x64 (${formatBytes(macIntelAsset.size)})` : 'Intel Build'}
-              </a>
+              {macIntelAsset && macArmAsset && (
+                <a href={macIntelAsset.browser_download_url} className="btn-download btn-mac" style={{ opacity: 0.9, backgroundColor: '#4f46e5' }}>
+                  <ArrowDownToLine size={20} />
+                  Download for macOS (Intel x64 - {formatBytes(macIntelAsset.size)})
+                </a>
+              )}
             </div>
           </div>
 
@@ -196,7 +198,7 @@ export default function App() {
             </ul>
             <a href={winAsset ? winAsset.browser_download_url : fallbackLink} className="btn-download btn-win" style={{ marginTop: 'auto' }}>
               <ArrowDownToLine size={20} />
-              {winAsset ? `Download for Windows (${formatBytes(winAsset.size)})` : 'Download from GitHub'}
+              {winAsset ? `Download for Windows (${formatBytes(winAsset.size)})` : 'Download for Windows (x64)'}
             </a>
           </div>
 
